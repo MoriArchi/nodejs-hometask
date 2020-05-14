@@ -4,7 +4,8 @@ class AuthService {
     login(userData) {
         const user = UserService.search(userData);
         if (!user) {
-            throw Error('User not found');
+            // throw Error('User not found');
+            return null;
         }
         return user;
     }
