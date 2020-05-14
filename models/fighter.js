@@ -1,7 +1,10 @@
-exports.fighter = {
-    "id": "",
-    "name": "",
-    "health": 100,
-    "power": 0,
-    "defense": 1, // 1 to 10
-};
+class Fighter {
+    constructor({ name, health, power, defense }) {
+        this.name = name;
+        this.health = Number(health);
+        this.power = Number(power);
+        this.defense = Number(defense);
+    }
+}
+
+module.exports.Fighter = Fighter;
