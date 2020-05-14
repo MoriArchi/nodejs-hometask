@@ -2,14 +2,14 @@
     margin-top: 2rem;
 }
 
-#figh-wrapper {
+#fight-wrapper {
     width: 70%;
     margin: 2rem auto;
     border: 1px solid rgba(0, 0, 0, 0.1);
     display: flex;
 }
 
-#figh-wrapper > *:first-child, #figh-wrapper > *:last-child {
+#fight-wrapper > *:first-child, #fight-wrapper > *:last-child {
     flex: 1;
 }
 

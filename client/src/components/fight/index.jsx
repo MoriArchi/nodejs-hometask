@@ -2,17 +2,22 @@ import React from 'react';
 
 import { getFighters } from '../../services/domainRequest/fightersRequest';
 import NewFighter from '../newFighter';
-import Fighter from '../fighter';
+//import Fighter from '../fighter';
+import FighterSelector from '../fighterSelector/fighterSelector';
 import { Button } from '@material-ui/core';
 
 import './fight.css';
 
 class Fight extends React.Component {
-    state = {
-        fighters: [],
-        fighter1: null,
-        fighter2: null,
-    };
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            fighters: [],
+            fighter1: null,
+            fighter2: null,
+        };
+    }
 
     async componentDidMount() {
         const fighters = await getFighters();
@@ -22,7 +27,8 @@ class Fight extends React.Component {
     }
 
     onFightStart = () => {
-
+        const { fighter1, fighter2 } = this.state;
+        this.props.onStartFight(fighter1, fighter2);
     };
 
     onCreate = (fighter) => {
@@ -57,17 +63,38 @@ class Fight extends React.Component {
 
     render() {
         const { fighter1, fighter2 } = this.state;
+        const fighter1Img = 'https://media.giphy.com/media/kdHa4JvihB2gM/giphy.gif';
+        const fighter2Img = 'https://i.pinimg.com/originals/46/4b/36/464b36a7aecd988e3c51e56a823dbedc.gif';
         return (
             <div id="wrapper">
                 <NewFighter onCreated={this.onCreate}/>
-                <div id="figh-wrapper">
-                    <Fighter selectedFighter={fighter1} onFighterSelect={this.onFighter1Select}
-                             fightersList={this.getFighter1List() || []}/>
-                    <div className="btn-wrapper">
-                        <Button onClick={this.onFightStart} variant="contained" color="primary">Start Fight</Button>
+                <div id="fight-wrapper">
+                    <div className="wrapper left">
+                        <FighterSelector
+                            selectedFighter={fighter1}
+                            onFighterSelect={this.onFighter1Select}
+                            fightersList={this.getFighter1List() || []}
+                            fighterImg={fighter1Img}
+                        />
                     </div>
-                    <Fighter selectedFighter={fighter2} onFighterSelect={this.onFighter2Select}
-                             fightersList={this.getFighter2List() || []}/>
+                    <div className="wrapper">
+                        <Button
+                            onClick={this.onFightStart}
+                            variant="contained"
+                            color="primary"
+                            disabled={!(fighter1 && fighter2)}
+                        >
+                            Start Fight
+                        </Button>
+                    </div>
+                    <div className="wrapper right">
+                        <FighterSelector
+                            selectedFighter={fighter2}
+                            onFighterSelect={this.onFighter2Select}
+                            fightersList={this.getFighter2List() || []}
+                            fighterImg={fighter2Img}
+                        />
+                    </div>
                 </div>
             </div>
         );
